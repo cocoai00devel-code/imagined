@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />　
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>AI音声入力アシスタントUI (テキスト/マイク対応)</title>
+    <link rel="stylesheet" href="sns/sns_imakun.css">
+    <link rel="icon" href="design_icon.svg" type="image/svg+xml">
+    
+</head>
+<body>
+    <canvas id="waveCanvas"></canvas>
+    <div id="status">スタンバイ中</div>
+    <div id="chat-log"></div>
+    <div id="ui">
+        <!-- ログ送信ボタン -->
+        <div id="log-controls" style="display: flex; justify-content: flex-end; gap: 10px;">
+            <button id="log-btn" class="control-btn">ログを送信（自動記録中）</button>
+        </div>
+
+        <div id="input-area">
+            <input type="text" id="voice-input" placeholder="メッセージを入力するか、マイクボタンを押してください" />
+            <button id="send-btn" class="control-btn">
+                <span id="send-icon">🎤</span>
+            </button>
+        </div>
+    </div>
+    <div id="message-box"></div>
+    <script src="sns/imakunAI.js"></script>
+    
+</body>
+</html>

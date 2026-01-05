@@ -1,0 +1,322 @@
+<svg width="600" height="300" viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg" id="pwa-svg">
+<defs>
+    <linearGradient id="rainbow-fill" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="red" />
+        <stop offset="16.6%" stop-color="orange" />
+        <stop offset="100%" stop-color="violet" />
+    </linearGradient>
+    <linearGradient id="rainbow-fill2" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="red" />
+        <stop offset="16%" stop-color="orange" />
+        <stop offset="32%" stop-color="yellow" />
+        <stop offset="48%" stop-color="green" />
+        <stop offset="64%" stop-color="blue" />
+        <stop offset="80%" stop-color="indigo" />
+        <stop offset="100%" stop-color="violet" />
+    </linearGradient>
+    <linearGradient id="rainbow-nose" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="red" />
+        <stop offset="100%" stop-color="orange" />
+    </linearGradient>
+</defs>
+
+<style type="text/css">
+<![CDATA[
+    svg { cursor: none; background: #a0d8ef; }
+    /* SVG単体で開いた時の背景色 */
+    :root { background: #a0d8ef; cursor: none; }
+
+    /* --- ステッキ & 先端 --- */
+    #magic-stick, #magic-tip {
+      position: fixed; /* foreignObject内で機能するように調整 */
+      pointer-events: none !important;
+      z-index: 999;
+    }
+
+    #magic-stick {
+      width: 140px; height: 12px;
+      background: linear-gradient(90deg, #c39bff, #ffb3ec, #ff7ada);
+      border-radius: 999px;
+      transform-origin: right center;
+      transform: rotate(-30deg);
+      box-shadow: 0 0 8px rgba(255, 140, 255, 0.6);
+      margin-left: -130px; margin-top: 5px;
+    }
+
+    #magic-tip {
+      width: 38px; height: 38px;
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+      background: radial-gradient(circle, #fff, #ffe3ff, #ff47d8);
+      box-shadow: 0 0 20px #ff47d8;
+      animation: tip-rainbow 1.8s linear infinite;
+    }
+
+    @keyframes tip-rainbow {
+      0% { filter: hue-rotate(0deg); transform: translate(-50%, -50%) scale(1); }
+      50% { filter: hue-rotate(180deg); transform: translate(-50%, -50%) scale(1.1); }
+      100% { filter: hue-rotate(360deg); transform: translate(-50%, -50%) scale(1); }
+    }
+
+    /* --- パーティクル --- */
+    .particle {
+      position: fixed; width: 8px; height: 8px;
+      background: radial-gradient(circle, #fff, #ff47d8);
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+      animation: moveParticle 1s ease-out forwards;
+      pointer-events: none;
+    }
+
+    @keyframes moveParticle {
+      0% { 
+        transform: translate(-50%, -50%) scale(1); 
+        opacity: 1; 
+      }
+      100% { 
+        /* scale(0)を最後に置くことで、移動しながら小さく消えます */
+        transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0); 
+        opacity: 0; 
+      }
+    }
+
+    /* --- 鼻と目の演出 --- */
+   @keyframes moveParticle {
+      0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+      100% { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0); opacity: 0; }
+    }
+
+    #nose { cursor: pointer; pointer-events: all; transition: filter 0.3s; }
+    .rainbow-flow { animation: rainbow-anim 2s linear infinite; }
+    @keyframes rainbow-anim {
+      0% { filter: hue-rotate(0deg) saturate(1.5); }
+      100% { filter: hue-rotate(360deg) saturate(1.5); }
+    }
+    .iris { transform-box: fill-box; transform-origin: center; transition: fill 0.3s; }
+    .hidden { opacity: 0; transition: opacity 0.3s; }
+   @keyframes rainbow {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(360deg); }
+    }
+    .svg-title {
+      font-size: 24px;
+      color: #0a74da;
+      margin-bottom: 10px;
+    }
+    h1 { margin:0; font-size:24px; color:#0a74da; }
+    p { font-size:16px; color:#333; text-align:center; max-width:300px; }
+    ]]>
+</style>
+
+<path
+    d="M 50 200 A 250 250 0 0 1 550 200"
+    fill="none"
+    stroke="url(#rainbow-fill2)"
+    stroke-width="3"
+    stroke-linecap="round"
+/>
+<ellipse cx="245" cy="52" rx="15" ry="20" fill="white" stroke="" stroke-width="1.5"/>
+
+<ellipse cx="315" cy="52" rx="15" ry="20" fill="white" stroke="" stroke-width="1.5"/>
+<ellipse class="iris" id="eye-right" cx="315" cy="52" rx="5" ry="12" fill="url(#rainbow-fill)" stroke="" stroke-width="1.5">  
+    <animate attributeName="ry" 
+              values="12; 12; 0.1; 12" 
+              keyTimes="0; 0.95; 0.97; 1" 
+              dur="3s" 
+              repeatCount="indefinite"/>
+</ellipse>
+<ellipse class="iris" id="eye-left" cx="245" cy="52" rx="5" ry="12" fill="url(#rainbow-fill)" stroke="" stroke-width="1.5">
+<animate attributeName="ry" 
+          values="12; 12; 0.1; 12" 
+          keyTimes="0; 0.95; 0.97; 1" 
+          dur="3s" 
+          repeatCount="indefinite"/>
+</ellipse>
+<line id="rain-line1" x1="30" y1="80" x2="180" y2="110" stroke="black" stroke-width="3" />
+<line id="rain-line2" x1="30" y1="130" x2="180" y2="130" stroke="black" stroke-width="2"/>
+<line id="rain-line3" x1="30" y1="180" x2="180" y2="150" stroke="black" stroke-width="3"/> 
+<line id="rain-line4" x1="340" y1="110" x2="503" y2="80" stroke="black" stroke-width="3" />
+<line id="rain-line5" x1="340" y1="130" x2="520" y2="130" stroke="black" stroke-width="2" />
+<line id="rain-line6" x1="340" y1="150" x2="520" y2="180" stroke="black" stroke-width="3" />
+<circle id="nose" cx="280" cy="85" r="14" fill="url(#rainbow-nose)" stroke="url(#rainbow-nose)" stroke-width="2.5" />
+
+<text x="105" y="82" font-family="Arial, sans-serif" font-size="46" font-weight="1.5" fill="url(#rainbow-fill2)" >
+       K  S -      
+</text>
+<text x="215" y="98" font-family="Arial, sans-serif" font-size="96" font-weight="1.5" fill="url(#rainbow-fill2)" transform="rotate(0 30 50)"> 
+       9      
+</text>
+<text x="290" y="94" font-family="Arial, sans-serif" font-size="96" font-weight="1.5" fill="url(#rainbow-fill2)" >
+        0      
+</text>
+<text x="360" y="92" font-family="Arial, sans-serif" font-size="96" font-weight="1.5" fill="url(#rainbow-fill2)" >
+        3    
+</text>
+<line id="rain-line7" x1="280" y1="100" x2="280" y2="150" stroke="black" stroke-width="2" />
+<foreignObject x="0" y="0" width="100%" height="100%" style="pointer-events: none;">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="width: 100%; height: 100%;">
+        <div id="magic-particles" style="position: fixed; pointer-events: none;"></div>
+        <div id="magic-stick"     style="position: fixed; pointer-events: none;"></div>
+        <div id="magic-tip"       style="position: fixed; pointer-events: none;"></div> 
+    </div>
+</foreignObject>
+<script type="text/ecmascript">
+<![CDATA[
+(() => {
+    const svg = document.getElementById('pwa-svg');
+    // --- 共通設定・要素取得 ---
+    const colors = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"];
+    const nose = document.getElementById("nose");
+    const tip = document.getElementById("magic-tip");
+    const particlesContainer = document.getElementById("magic-particles");
+    const stick = document.getElementById("magic-stick");
+
+    const lines = ["rain-line1", "rain-line2", "rain-line3", "rain-line4", "rain-line5", "rain-line6", "rain-line7"]
+        .map(id => document.getElementById(id))
+        .filter(el => el !== null);
+
+    const eyes = [
+        { el: document.getElementById("eye-left") },
+        { el: document.getElementById("eye-right") }
+    ].filter(eye => eye.el !== null);
+
+    // --- 内部状態 ---
+    let lineIndexes = lines.map((_, idx) => idx % colors.length);
+    let lineSpeeds = lines.map(() => 200 + Math.random() * 300);
+    let hoverIntervals = [];
+    let lookInterval = null;
+    let mouseMoveTimer = null;
+    let tipBase = { x: 0, y: 0 }; // window汚染を避けるためオブジェクトで管理
+    const MOUSE_STOP_DELAY = 150;
+
+    // --- 1. 目のアニメーション (待機時) ---
+    function startLookingAnimation() {
+        if (lookInterval) return;
+        let currentPos = 0;
+        let direction = 1;
+        const maxLookOffset = 5;
+        const step = 0.5;
+
+        lookInterval = setInterval(() => {
+            currentPos += direction * step;
+            if (Math.abs(currentPos) >= maxLookOffset) direction *= -1;
+            eyes.forEach(eye => eye.el.style.transform = `translateX(${currentPos}px)`);
+        }, 50);
+    }
+
+    function stopLookingAnimation() {
+        if (lookInterval) {
+            clearInterval(lookInterval);
+            lookInterval = null;
+        }
+    }
+
+    // --- 2. 追尾ロジック ---
+    document.addEventListener("mousemove", (e) => {
+        stopLookingAnimation();
+
+        // 目の追尾
+        eyes.forEach(eye => {
+            const rect = eye.el.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const angle = Math.atan2(e.clientY - centerY, e.clientX - centerX);
+            const dist = 5;
+            eye.el.style.transform = `translate(${Math.cos(angle) * dist}px, ${Math.sin(angle) * dist}px)`;
+        });
+
+        // ステッキの追尾
+        if (stick) {
+            const sx = e.pageX - 140;
+            const sy = e.pageY - 10;
+            stick.style.left = `${sx}px`;
+            stick.style.top = `${sy}px`;
+            tipBase.x = sx + 140;
+            tipBase.y = sy + 6;
+        }
+
+        clearTimeout(mouseMoveTimer);
+        mouseMoveTimer = setTimeout(startLookingAnimation, MOUSE_STOP_DELAY);
+    });
+
+    // --- 3. 鼻のホバー ---
+    if (nose) {
+        nose.addEventListener("mouseenter", () => {
+            nose.classList.add("rainbow-flow");
+            tip?.classList.add("hidden");
+            document.querySelectorAll(".particle").forEach(p => p.classList.add("hidden-particle"));
+
+            if (hoverIntervals.length === 0) {
+                lines.forEach((line, idx) => {
+                    line.setAttribute("visibility", "visible");
+                    const interval = setInterval(() => {
+                        line.setAttribute("stroke", colors[lineIndexes[idx]]);
+                        lineIndexes[idx] = (lineIndexes[idx] + 1) % colors.length;
+                    }, lineSpeeds[idx]);
+                    hoverIntervals.push(interval);
+                });
+            }
+        });
+
+        nose.addEventListener("mouseleave", () => {
+            nose.classList.remove("rainbow-flow");
+            tip?.classList.remove("hidden");
+            hoverIntervals.forEach(clearInterval);
+            hoverIntervals = [];
+            lines.forEach(line => {
+                line.setAttribute("stroke", "black");
+                line.setAttribute("visibility", "hidden");
+            });
+        });
+    }
+
+    // --- 4. 魔法エフェクト (requestAnimationFrame) ---
+    let circleAngle = 0;
+    let tick = 0; // ← ここに追加
+
+    function update() {
+        if (tipBase.x && tip) {
+            circleAngle += 0.1;
+            const px = tipBase.x + Math.cos(circleAngle) * 18;
+            const py = tipBase.y + Math.sin(circleAngle) * 18;
+            tip.style.left = `${px}px`;
+            tip.style.top = `${py}px`;
+
+            // パーティクル生成の頻度を調整
+            tick++;
+            if (tick % 3 === 0) { 
+                spawn(px, py);
+            }
+        }
+        requestAnimationFrame(update);
+    }
+    function spawn(x, y) {
+        if (!particlesContainer) return;  // 容器がない場合は中止
+        const p = document.createElement("div");
+        if (!p) return;  // 要素作成に失敗した場合は中止
+        
+
+        // --- ここから追加（変数を定義） ---
+        const a = Math.random() * 2 * Math.PI; // ランダムな角度
+        const s = Math.random() * 2 + 1;       // ランダムな速度
+        // --- ここまで ---
+        // --- 修正の要：ここで a と s を作らないと、下の left 設定まで辿り着きません ---
+        // 4. スタイルを設定（ここでエラーが出ていたのを防ぎます）
+        p.className = "particle";
+        p.style.left = `${x}px`; // ここでエラーが起きていた
+        p.style.top = `${y}px`;
+        // 例：もっと遠くまで飛び散らせたい場合（30を50にするなど）
+        p.style.setProperty("--dx", `${Math.cos(a) * s * 50}px`);
+        p.style.setProperty("--dy", `${Math.sin(a) * s * 50}px`);
+
+        particlesContainer.appendChild(p);
+            setTimeout(() => {
+                if (p && p.parentNode) {
+                p.parentNode.removeChild(p);
+            }
+            }, 1000);
+    }
+        update();
+        startLookingAnimation();
+})();
+]]>
+</script>
+</svg>
